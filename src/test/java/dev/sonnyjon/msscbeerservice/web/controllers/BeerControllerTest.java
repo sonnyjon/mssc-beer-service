@@ -80,8 +80,7 @@ class BeerControllerTest
     {
         // given
         final BeerDto testBeer = getTestBeer();
-        testBeer.setId( UUID.randomUUID() );
-        final String url = URL_ROOT + testBeer.getId().toString();
+        final String url = URL_ROOT + UUID.randomUUID();
         final String beerContent = objectMapper.writeValueAsString( testBeer );
 
         // when, then
@@ -97,6 +96,7 @@ class BeerControllerTest
                 .name( "My Beer" )
                 .style( BeerStyle.ALE )
                 .price(new BigDecimal( "2.99" ))
+                .upc( 123456789012L )
                 .build();
     }
 
