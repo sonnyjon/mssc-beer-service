@@ -2,7 +2,7 @@ package dev.sonnyjon.msscbeerservice.services;
 
 import dev.sonnyjon.msscbeerservice.model.Beer;
 import dev.sonnyjon.msscbeerservice.repositories.BeerRepository;
-import dev.sonnyjon.msscbeerservice.web.controllers.NotFoundException;
+import dev.sonnyjon.msscbeerservice.web.exceptions.NotFoundException;
 import dev.sonnyjon.msscbeerservice.web.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.web.mapper.BeerMapper;
 import lombok.RequiredArgsConstructor;

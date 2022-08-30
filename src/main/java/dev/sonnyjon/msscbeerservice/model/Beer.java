@@ -31,10 +31,12 @@ public class Beer
     private Long version;
 
     private String name;
+
     private String style;
 
     @Column(unique = true)
-    private Long upc;
+    private String upc;
+
     private BigDecimal price;
 
     @CreationTimestamp
@@ -45,5 +47,6 @@ public class Beer
     private Timestamp lastModifiedDate;
 
     private Integer minOnHand;
+
     private Integer quantityToBrew;
 }
