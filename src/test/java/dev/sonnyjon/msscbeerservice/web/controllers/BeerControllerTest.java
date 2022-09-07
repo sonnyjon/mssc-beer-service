@@ -1,7 +1,6 @@
 package dev.sonnyjon.msscbeerservice.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.sonnyjon.msscbeerservice.bootstrap.BeerDataLoader;
 import dev.sonnyjon.msscbeerservice.services.BeerService;
 import dev.sonnyjon.msscbeerservice.web.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.web.dto.BeerStyle;
@@ -153,7 +152,7 @@ class BeerControllerTest
                 .name( "My Beer" )
                 .style( BeerStyle.ALE )
                 .price(new BigDecimal( "2.99" ))
-                .upc( BeerDataLoader.BEER_1_UPC )
+//                .upc( BeerDataLoader.BEER_1_UPC )
                 .build();
     }
 }
