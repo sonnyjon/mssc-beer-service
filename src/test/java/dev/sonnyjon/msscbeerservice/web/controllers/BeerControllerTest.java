@@ -2,9 +2,8 @@ package dev.sonnyjon.msscbeerservice.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sonnyjon.msscbeerservice.services.BeerService;
-import dev.sonnyjon.msscbeerservice.web.dto.BeerDto;
-import dev.sonnyjon.msscbeerservice.web.dto.BeerStyle;
-import dev.sonnyjon.msscbeerservice.web.exceptions.NotFoundException;
+import dev.sonnyjon.msscbeerservice.model.BeerDto;
+import dev.sonnyjon.msscbeerservice.model.BeerStyle;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
 package dev.sonnyjon.msscbeerservice.web.mapper;
 
 import dev.sonnyjon.msscbeerservice.model.Beer;
-import dev.sonnyjon.msscbeerservice.web.dto.BeerDto;
+import dev.sonnyjon.msscbeerservice.model.BeerDto;
 import org.mapstruct.Mapper;
 
 /**
@@ -10,6 +10,6 @@ import org.mapstruct.Mapper;
 @Mapper(uses = DateMapper.class)
 public interface BeerMapper
 {
-    BeerDto convert(Beer beer);
-    Beer convert(BeerDto beerDto);
+    BeerDto toBeerDto(Beer beer);
+    Beer toBeer(BeerDto beerDto);
 }

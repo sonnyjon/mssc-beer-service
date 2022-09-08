@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.web.dto;
+package dev.sonnyjon.msscbeerservice.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

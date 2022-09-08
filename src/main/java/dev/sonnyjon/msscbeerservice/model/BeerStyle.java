@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.web.dto;
+package dev.sonnyjon.msscbeerservice.model;
 
 /**
  * Created by Sonny on 8/21/2022.
