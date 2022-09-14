@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.web.mapper;
+package dev.sonnyjon.msscbeerservice.mapper;
 
 import org.springframework.stereotype.Component;
 

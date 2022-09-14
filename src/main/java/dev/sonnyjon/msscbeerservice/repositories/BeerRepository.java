@@ -1,7 +1,7 @@
 package dev.sonnyjon.msscbeerservice.repositories;
 
-import dev.sonnyjon.msscbeerservice.model.Beer;
-import dev.sonnyjon.msscbeerservice.model.BeerStyle;
+import dev.sonnyjon.msscbeerservice.model.beer.Beer;
+import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.repository.PagingAndSortingRepository;

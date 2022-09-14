@@ -1,21 +1,23 @@
 package dev.sonnyjon.msscbeerservice.services;
 
-import dev.sonnyjon.msscbeerservice.model.Beer;
-import dev.sonnyjon.msscbeerservice.model.BeerDto;
-import dev.sonnyjon.msscbeerservice.model.BeerPagedList;
-import dev.sonnyjon.msscbeerservice.model.BeerStyle;
+import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
+import dev.sonnyjon.msscbeerservice.dto.BeerDto;
+import dev.sonnyjon.msscbeerservice.mapper.BeerMapper;
+import dev.sonnyjon.msscbeerservice.model.beer.Beer;
+import dev.sonnyjon.msscbeerservice.model.beer.BeerPagedList;
+import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 import dev.sonnyjon.msscbeerservice.repositories.BeerRepository;
-import dev.sonnyjon.msscbeerservice.web.controllers.NotFoundException;
-import dev.sonnyjon.msscbeerservice.web.mapper.BeerMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * Created by Sonny on 8/29/2022.
@@ -27,31 +29,43 @@ public class BeerServiceImpl implements BeerService
     private final BeerRepository beerRepository;
     private final BeerMapper beerMapper;
 
+    @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand == false ")
     @Override
-    public BeerPagedList listBeers(String beerName, BeerStyle beerStyle, PageRequest pageRequest)
+    public BeerPagedList listBeers(String beerName,
+                                   BeerStyle beerStyle,
+                                   PageRequest pageRequest,
+                                   Boolean showInventoryOnHand)
     {
-        BeerPagedList beerPagedList;
         Page<Beer> beerPage = getBeerPage( beerName, beerStyle, pageRequest );
 
-        beerPagedList = new BeerPagedList(
-                beerPage.getContent()
-                    .stream()
-                    .map(beerMapper::toBeerDto)
-                    .collect(Collectors.toList()),
-                PageRequest.of(
-                    beerPage.getPageable().getPageNumber(),
-                    beerPage.getPageable().getPageSize()
-                ),
-                beerPage.getTotalElements()
+        List<BeerDto> content = (showInventoryOnHand)
+                ? beerPage.getContent().stream().map(beerMapper::toBeerDtoWithInventory).toList()
+                : beerPage.getContent().stream().map(beerMapper::toBeerDto).toList();
+
+        Pageable pageable = PageRequest.of(
+                beerPage.getPageable().getPageNumber(),
+                beerPage.getPageable().getPageSize()
         );
 
-        return beerPagedList;
+        return new BeerPagedList( content, pageable, beerPage.getTotalElements() );
     }
 
+    @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand == false ")
     @Override
-    public BeerDto getById(UUID beerId)
+    public BeerDto getById(UUID beerId, Boolean showInventoryOnHand)
     {
-        return beerMapper.toBeerDto(beerRepository.findById( beerId ).orElseThrow( NotFoundException::new ));
+        Beer beer = beerRepository.findById( beerId ).orElseThrow( NotFoundException::new );
+
+        return (showInventoryOnHand)
+                ? beerMapper.toBeerDtoWithInventory( beer )
+                : beerMapper.toBeerDto( beer );
+    }
+
+    @Cacheable(cacheNames = "beerUpcCache")
+    @Override
+    public BeerDto getByUpc(String upc)
+    {
+        return beerMapper.toBeerDto(beerRepository.findByUpc( upc ));
     }
 
     @Override

@@ -1,6 +1,7 @@
-package dev.sonnyjon.msscbeerservice.model;
+package dev.sonnyjon.msscbeerservice.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

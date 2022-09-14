@@ -1,12 +1,12 @@
 package dev.sonnyjon.msscbeerservice.web.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.sonnyjon.msscbeerservice.controllers.BeerController;
+import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
 import dev.sonnyjon.msscbeerservice.services.BeerService;
-import dev.sonnyjon.msscbeerservice.model.BeerDto;
-import dev.sonnyjon.msscbeerservice.model.BeerStyle;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import dev.sonnyjon.msscbeerservice.dto.BeerDto;
+import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -57,35 +57,41 @@ class BeerControllerTest
         mocks.close();
     }
 
-    @Test
-    void givenValid_UUID_whenGetBeerById_thenBeerDto() throws Exception
+    @Nested
+    class BeerByIdTest
     {
-        // given
-        final BeerDto beerDto = getTestBeerDto();
-        final String PATH = PATH_ROOT + UUID.randomUUID();
+        @Test
+        @DisplayName("should return BeerDTO given valid UUID")
+        void givenValid_UUID_whenGetBeerById_thenBeerDto() throws Exception
+        {
+            // given
+            final BeerDto beerDto = getTestBeerDto();
+            final String PATH = PATH_ROOT + UUID.randomUUID();
 
-        // when, then
-        when(beerService.getById( any(UUID.class) )).thenReturn( beerDto );
+            // when, then
+            when(beerService.getById( any(UUID.class), anyBoolean() )).thenReturn( beerDto );
 
-        mockMvc.perform(get( PATH )
-                        .accept( MediaType.APPLICATION_JSON ))
-                .andExpect( status().isOk() );
-    }
+            mockMvc.perform(get( PATH )
+                            .accept( MediaType.APPLICATION_JSON ))
+                    .andExpect( status().isOk() );
+        }
 
-    @Test
-    void givenInvalid_UUID_whenGetBeerById_thenThrowException() throws Exception
-    {
-        // given
-        final String PATH = PATH_ROOT + UUID.randomUUID();
+        @Test
+        @DisplayName("should throw NotFoundException when UUID invalid.")
+        void givenInvalid_UUID_whenGetBeerById_thenThrowException() throws Exception
+        {
+            // given
+            final String PATH = PATH_ROOT + UUID.randomUUID();
 
-        // when, then
-        when(beerService.getById( any(UUID.class) )).thenThrow( NotFoundException.class );
+            // when, then
+            when(beerService.getById( any(UUID.class), anyBoolean() )).thenThrow( NotFoundException.class );
 
-        mockMvc.perform(get( PATH ))
-                .andExpect( status().isNotFound() )
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundException));
+            mockMvc.perform(get( PATH ))
+                    .andExpect( status().isNotFound() )
+                    .andExpect(result -> assertTrue(result.getResolvedException() instanceof NotFoundException));
 
-        verify(beerService, times(1)).getById( any(UUID.class) );
+            verify(beerService, times(1)).getById( any(UUID.class), anyBoolean() );
+        }
     }
 
     @Test
@@ -105,7 +111,6 @@ class BeerControllerTest
 
         verify(beerService, times(1)).saveNewBeer( any(BeerDto.class) );
     }
-
 
     @Test
     void givenValid_UUIDandDto_whenUpdateBeerById_thenSaveBeer() throws Exception

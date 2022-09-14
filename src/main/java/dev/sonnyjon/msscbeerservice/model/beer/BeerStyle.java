@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.model;
+package dev.sonnyjon.msscbeerservice.model.beer;
 
 /**
  * Created by Sonny on 8/21/2022.

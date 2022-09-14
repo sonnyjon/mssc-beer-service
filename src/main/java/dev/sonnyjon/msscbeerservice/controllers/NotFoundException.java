@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.web.controllers;
+package dev.sonnyjon.msscbeerservice.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
