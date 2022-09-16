@@ -209,27 +209,54 @@ class BeerServiceImplTest
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( testBeer ));
-            when(beerMapper.toBeer(any( BeerDto.class ))).thenReturn( testBeer );
             when(beerRepository.save(any( Beer.class ))).thenReturn( testBeer );
-            when(beerMapper.toBeerDto(any( Beer.class ))).thenReturn( testBeerDto );
+            when(beerMapper.toBeerDto(any( Beer.class ))).thenReturn( desiredBeerDto );
 
             BeerDto actualBeer = beerService.updateBeer( UUID.randomUUID(), testBeerDto );
 
             // then
+            assertNotNull( actualBeer );
+            verify(beerRepository, times(1)).findById(any( UUID.class ));
+            verify(beerRepository, times(1)).save(any( Beer.class ));
+            verify(beerMapper, times(1)).toBeerDto(any( Beer.class ));
         }
 
         @Test
         @DisplayName("should throw NotFoundException")
         void givenBadId_whenUpdate_thenNotFoundException()
         {
-            fail("not implemented");
+            // given
+            final UUID beerId = UUID.randomUUID();
+            final BeerDto testBeerDto = getBeerDto();
+
+            // when
+            when(beerRepository.findById(any( UUID.class ))).thenThrow( NotFoundException.class );
+            Executable executable = () -> beerService.updateBeer( beerId, testBeerDto );
+
+            // then
+            assertThrows( NotFoundException.class, executable );
+            verify(beerRepository, times(1)).findById(any( UUID.class ));
         }
     }
 
+    // TODO: Write tests for ListBeers after instructor lectures on this part.
+
+    @Disabled
     @Nested
     @DisplayName("listBeers() Method")
     class ListBeersTest
     {
+        @Test
+        @DisplayName("should return BeerPagedList of all beers with name, style, and QoH")
+        void givenBeerName_andStyle_andInventory_whenListBeers_thenBeerList_withNameAndStyleAndQuantity()
+        {
+            // given
+
+            // when
+
+            // then
+        }
+
         @Test
         @DisplayName("should return BeerPagedList of all beers with name and style")
         void givenBeerName_andStyle_whenListBeers_thenBeerList_withNameAndStyle()
@@ -238,33 +265,60 @@ class BeerServiceImplTest
         }
 
         @Test
+        @DisplayName("should return BeerPagedList of all beers with name and QoH")
+        void givenBeerName_andInventory_whenListBeers_thenBeerList_withNameAndQuantity()
+        {
+            fail("not implemented");
+        }
+
+        @Test
         @DisplayName("should return BeerPagedList of all beers with name")
-        void givenBeerName_butNoStyle_whenListBeers_thenBeerList_withName()
+        void givenBeerName_whenListBeers_thenBeerList_withName()
+        {
+            fail("not implemented");
+        }
+
+        @Test
+        @DisplayName("should return BeerPagedList of all beers with style and QoH")
+        void givenBeerStyle_andInventory_whenListBeers_thenBeerList_withStyleAndQuantity()
         {
             fail("not implemented");
         }
 
         @Test
         @DisplayName("should return BeerPagedList of all beers with style")
-        void givenNoBeerName_butStyle_whenListBeers_thenBeerList_withStyle()
+        void givenBeerStyle_whenListBeers_thenBeerList_withStyle()
+        {
+            fail("not implemented");
+        }
+
+        @Test
+        @DisplayName("should return BeerPagedList of all beers with QoH")
+        void givenShowInventory_whenListBeers_thenBeerList_ofAllBeersAndQuantity()
         {
             fail("not implemented");
         }
 
         @Test
         @DisplayName("should return BeerPagedList of all beers")
-        void givenNoBeerName_andNoStyle_whenListBeers_thenBeerList_ofAllBeers()
+        void whenListBeers_thenBeerList_ofAllBeers()
         {
             fail("not implemented");
         }
+
     }
 
     //==================================================================================================================
     private Beer getTestBeer()
     {
+        return getTestBeer( "Test Beer", BeerStyle.IPA );
+    }
+
+    private Beer getTestBeer(String name, BeerStyle beerStyle)
+    {
         return Beer.builder()
-                .name( "Test Beer" )
-                .style( BeerStyle.IPA.name() )
+                .name( name )
+                .style( beerStyle.name() )
                 .upc( TEST_UPC )
                 .price(new BigDecimal( "12.95" ))
                 .minOnHand( 12 )
@@ -274,9 +328,14 @@ class BeerServiceImplTest
 
     private BeerDto getBeerDto()
     {
+        return getBeerDto( "Test Beer DTO", BeerStyle.IPA );
+    }
+
+    private BeerDto getBeerDto(String name, BeerStyle beerStyle)
+    {
         return BeerDto.builder()
-                .name( "Test Beer DTO" )
-                .style( BeerStyle.IPA )
+                .name( name )
+                .style( beerStyle )
                 .upc( TEST_UPC )
                 .price(new BigDecimal( "12.95" ))
                 .build();
@@ -286,6 +345,13 @@ class BeerServiceImplTest
     {
         BeerDto dto = getBeerDto();
         dto.setQuantityOnHand( 50 );
+        return dto;
+    }
+
+    private BeerDto getBeerDtoWithQuantityOnHand(String name, BeerStyle beerStyle, Integer quantity)
+    {
+        BeerDto dto = getBeerDto( name, beerStyle );
+        dto.setQuantityOnHand( quantity );
         return dto;
     }
 }
