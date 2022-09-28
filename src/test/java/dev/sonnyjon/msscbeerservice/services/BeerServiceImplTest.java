@@ -1,5 +1,7 @@
 package dev.sonnyjon.msscbeerservice.services;
 
+import dev.sonnyjon.msscbeerservice.cases.TestBeer;
+import dev.sonnyjon.msscbeerservice.cases.TestBeerDto;
 import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
 import dev.sonnyjon.msscbeerservice.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.mapper.BeerMapper;
@@ -13,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,10 +61,10 @@ class BeerServiceImplTest
         {
             // given
             final UUID beerId = UUID.randomUUID();
-            final Beer testBeer = getTestBeer();
+            final Beer testBeer = TestBeer.getBeer();
             testBeer.setId( beerId );
 
-            final BeerDto testBeerDto = getBeerDtoWithQuantityOnHand();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDtoWithQuantity();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( testBeer ));
@@ -85,10 +86,10 @@ class BeerServiceImplTest
         {
             // given
             final UUID beerId = UUID.randomUUID();
-            final Beer testBeer = getTestBeer();
+            final Beer testBeer = TestBeer.getBeer();
             testBeer.setId( beerId );
 
-            final BeerDto testBeerDto = getBeerDto();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDto();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( testBeer ));
@@ -130,8 +131,8 @@ class BeerServiceImplTest
         void givenValidUpc_whenGetByUpc_thenBeerDto()
         {
             // given
-            final Beer testBeer = getTestBeer();
-            final BeerDto testBeerDto = getBeerDto();
+            final Beer testBeer = TestBeer.getBeer();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDto();
 
             // when
             when(beerRepository.findByUpc( anyString() )).thenReturn( testBeer );
@@ -171,8 +172,8 @@ class BeerServiceImplTest
         void givenBeerDto_whenSaveNewBeer_thenSaveBeer()
         {
             // given
-            final Beer testBeer = getTestBeer();
-            final BeerDto testBeerDto = getBeerDto();
+            final Beer testBeer = TestBeer.getBeer();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDto();
 
             // when
             when(beerMapper.toBeer(any( BeerDto.class ))).thenReturn( testBeer );
@@ -198,10 +199,10 @@ class BeerServiceImplTest
         void givenValidId_andBeerDto_whenUpdate_thenSaveBeer()
         {
             // given
-            final Beer testBeer = getTestBeer();
-            final BeerDto testBeerDto = getBeerDto();
+            final Beer testBeer = TestBeer.getBeer();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDto();
 
-            final BeerDto desiredBeerDto = getBeerDto();
+            final BeerDto desiredBeerDto = TestBeerDto.getBeerDto();
             desiredBeerDto.setName( testBeer.getName() );
             desiredBeerDto.setStyle(BeerStyle.valueOf( testBeer.getStyle() ));
             desiredBeerDto.setPrice( testBeer.getPrice() );
@@ -227,7 +228,7 @@ class BeerServiceImplTest
         {
             // given
             final UUID beerId = UUID.randomUUID();
-            final BeerDto testBeerDto = getBeerDto();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDto();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenThrow( NotFoundException.class );
@@ -306,52 +307,5 @@ class BeerServiceImplTest
             fail("not implemented");
         }
 
-    }
-
-    //==================================================================================================================
-    private Beer getTestBeer()
-    {
-        return getTestBeer( "Test Beer", BeerStyle.IPA );
-    }
-
-    private Beer getTestBeer(String name, BeerStyle beerStyle)
-    {
-        return Beer.builder()
-                .name( name )
-                .style( beerStyle.name() )
-                .upc( TEST_UPC )
-                .price(new BigDecimal( "12.95" ))
-                .minOnHand( 12 )
-                .quantityToBrew( 200 )
-                .build();
-    }
-
-    private BeerDto getBeerDto()
-    {
-        return getBeerDto( "Test Beer DTO", BeerStyle.IPA );
-    }
-
-    private BeerDto getBeerDto(String name, BeerStyle beerStyle)
-    {
-        return BeerDto.builder()
-                .name( name )
-                .style( beerStyle )
-                .upc( TEST_UPC )
-                .price(new BigDecimal( "12.95" ))
-                .build();
-    }
-
-    private BeerDto getBeerDtoWithQuantityOnHand()
-    {
-        BeerDto dto = getBeerDto();
-        dto.setQuantityOnHand( 50 );
-        return dto;
-    }
-
-    private BeerDto getBeerDtoWithQuantityOnHand(String name, BeerStyle beerStyle, Integer quantity)
-    {
-        BeerDto dto = getBeerDto( name, beerStyle );
-        dto.setQuantityOnHand( quantity );
-        return dto;
     }
 }

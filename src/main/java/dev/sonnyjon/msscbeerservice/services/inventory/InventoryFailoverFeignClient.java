@@ -12,7 +12,10 @@ import java.util.List;
 /**
  * Created by Sonny on 9/8/2022.
  */
-@FeignClient(name = "inventory-failover")
+@FeignClient(
+        name = "inventory-failover",
+        url = "/inventory-failover"
+)
 public interface InventoryFailoverFeignClient
 {
     @RequestMapping(method = RequestMethod.GET, value = "/inventory-failover")

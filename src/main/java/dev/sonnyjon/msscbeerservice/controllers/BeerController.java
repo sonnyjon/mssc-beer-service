@@ -32,8 +32,8 @@ public class BeerController
     public ResponseEntity<BeerPagedList> listBeers(
             @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
             @RequestParam(value = "pageSize", required = false) Integer pageSize,
-            @RequestParam(value = "beerName", required = false) String beerName,
-            @RequestParam(value = "beerStyle", required = false) BeerStyle beerStyle,
+            @RequestParam(value = "name", required = false) String beerName,
+            @RequestParam(value = "style", required = false) BeerStyle beerStyle,
             @RequestParam(value = "showInventoryOnHand", required = false) Boolean showInventoryOnHand)
     {
         pageNumber = (pageNumber == null || pageNumber < 0) ? DEFAULT_PAGE_NUMBER : pageNumber;

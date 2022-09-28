@@ -32,8 +32,10 @@ public class Beer
     @Version
     private Long version;
 
+    @Column(name = "beer_name")
     private String name;
 
+    @Column(name = "beer_style")
     private String style;
 
     @Column(unique = true)

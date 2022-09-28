@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.web.mapper;
+package dev.sonnyjon.msscbeerservice.mapper;
 
 import dev.sonnyjon.msscbeerservice.services.inventory.BeerInventoryService;
 import org.junit.jupiter.api.BeforeEach;

@@ -13,11 +13,11 @@ import java.util.UUID;
  */
 public interface BeerRepository extends PagingAndSortingRepository<Beer, UUID>
 {
-    Page<Beer> findAllByBeerName(String beerName, PageRequest pageRequest);
+    Page<Beer> findAllByName(String beerName, PageRequest pageRequest);
 
-    Page<Beer> findAllByBeerStyle(BeerStyle beerStyle, PageRequest pageRequest);
+    Page<Beer> findAllByStyle(BeerStyle beerStyle, PageRequest pageRequest);
 
-    Page<Beer> findAllByBeerNameAndBeerStyle(String beerName, BeerStyle beerStyle, PageRequest pageRequest);
+    Page<Beer> findAllByNameAndStyle(String beerName, BeerStyle beerStyle, PageRequest pageRequest);
 
     Beer findByUpc(String upc);
 }

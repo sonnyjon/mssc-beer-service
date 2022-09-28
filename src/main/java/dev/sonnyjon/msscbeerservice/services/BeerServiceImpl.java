@@ -95,13 +95,13 @@ public class BeerServiceImpl implements BeerService
         if (StringUtils.hasLength( beerName ))
         {
             beerPage = !ObjectUtils.isEmpty( beerStyle )
-                    ? beerRepository.findAllByBeerNameAndBeerStyle( beerName, beerStyle, pageRequest ) // search both
-                    : beerRepository.findAllByBeerName( beerName, pageRequest ); // search beer_service name
+                    ? beerRepository.findAllByNameAndStyle( beerName, beerStyle, pageRequest ) // search both
+                    : beerRepository.findAllByName( beerName, pageRequest ); // search beer_service name
         }
         else // !StringUtils.hasLength
         {
             beerPage = !ObjectUtils.isEmpty( beerStyle )
-                    ? beerRepository.findAllByBeerStyle( beerStyle, pageRequest ) // search beer_service style
+                    ? beerRepository.findAllByStyle( beerStyle, pageRequest ) // search beer_service style
                     : beerRepository.findAll( pageRequest );
         }
 
