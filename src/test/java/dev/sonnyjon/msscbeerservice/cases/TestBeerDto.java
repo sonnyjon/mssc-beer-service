@@ -12,30 +12,27 @@ public class TestBeerDto
 {
     public static BeerDto getBeerDto()
     {
-        return getBeerDto( "Test Beer DTO", BeerStyle.IPA );
+        return getBeerDto(
+                "Test Beer",
+                BeerStyle.IPA,
+                TestConstants.BEER_1_UPC,
+                12,
+                new BigDecimal( "19.95" )
+        );
     }
 
-    public static BeerDto getBeerDto(String name, BeerStyle beerStyle)
+    public static BeerDto getBeerDto(String name,
+                                     BeerStyle style,
+                                     String upc,
+                                     Integer quantityOnHand,
+                                     BigDecimal price)
     {
         return BeerDto.builder()
                 .name( name )
-                .style( beerStyle )
-                .upc( TestUpc.BEER_1_UPC )
-                .price(new BigDecimal( "12.95" ))
+                .style( style )
+                .upc( upc )
+                .quantityOnHand( quantityOnHand )
+                .price( price )
                 .build();
-    }
-
-    public static BeerDto getBeerDtoWithQuantity()
-    {
-        BeerDto dto = getBeerDto();
-        dto.setQuantityOnHand( 50 );
-        return dto;
-    }
-
-    public static BeerDto getBeerDtoWithQuantity(String name, BeerStyle beerStyle, Integer quantity)
-    {
-        BeerDto dto = getBeerDto( name, beerStyle );
-        dto.setQuantityOnHand( quantity );
-        return dto;
     }
 }

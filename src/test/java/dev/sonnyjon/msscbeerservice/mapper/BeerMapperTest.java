@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Created by Sonny on 9/16/2022.
  */
 @ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {BeerMapperImpl.class, DateMapper.class})
+@SpringBootTest(classes = {BeerMapperImpl_.class, DateMapper.class})
 class BeerMapperTest
 {
     @Autowired
