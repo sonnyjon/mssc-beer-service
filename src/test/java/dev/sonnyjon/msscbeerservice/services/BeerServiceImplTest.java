@@ -65,8 +65,8 @@ class BeerServiceImplTest
         void givenValidId_andShowInventory_whenGetById_thenBeerDtoWithQuantityOnHand()
         {
             // given
-            final Beer beer = getTestBeerWithId();
-            final BeerDto expectedDto = getTestBeerDtoWithQuantity();
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto expectedDto = TestBeerDto.getBeerDtoWithQuantity();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( beer ));
@@ -87,8 +87,8 @@ class BeerServiceImplTest
         void givenValidId_andIgnoreInventory_whenGetById_thenBeerDto()
         {
             // given
-            final Beer beer = getTestBeerWithId();
-            final BeerDto expectedDto = getTestBeerDtoWithoutQuantity();
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto expectedDto = TestBeerDto.getBeerDtoWithoutQuantity();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( beer ));
@@ -130,8 +130,8 @@ class BeerServiceImplTest
         void givenValidUpc_whenGetByUpc_thenBeerDto()
         {
             // given
-            final Beer beer = getTestBeerWithId();
-            final BeerDto expectedDto = getTestBeerDtoWithoutQuantity();
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto expectedDto = TestBeerDto.getBeerDtoWithoutQuantity();
 
             // when
             when(beerRepository.findByUpc( anyString() )).thenReturn( beer );
@@ -172,8 +172,8 @@ class BeerServiceImplTest
         void givenBeerDto_whenSaveNewBeer_thenSaveBeer()
         {
             // given
-            final Beer beer = getTestBeerWithId();
-            final BeerDto expectedDto = getTestBeerDtoWithoutQuantity();
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto expectedDto = TestBeerDto.getBeerDtoWithoutQuantity();
 
             // when
             when(beerMapper.toBeer(any( BeerDto.class ))).thenReturn( beer );
@@ -201,8 +201,8 @@ class BeerServiceImplTest
         void givenValidId_andBeerDto_whenUpdate_thenSaveBeer()
         {
             // given
-            final Beer expectedBeer = getTestBeerWithId();
-            final BeerDto expectedDto = getTestBeerDtoWithoutQuantity( expectedBeer );
+            final Beer expectedBeer = TestBeer.getBeerWithId();
+            final BeerDto expectedDto = TestBeerDto.getBeerDtoWithoutQuantity( expectedBeer );
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenReturn(Optional.of( expectedBeer ));
@@ -228,7 +228,7 @@ class BeerServiceImplTest
         {
             // given
             final UUID beerId = UUID.randomUUID();
-            final BeerDto testBeerDto = getTestBeerDtoWithoutQuantity();
+            final BeerDto testBeerDto = TestBeerDto.getBeerDtoWithoutQuantity();
 
             // when
             when(beerRepository.findById(any( UUID.class ))).thenThrow( NotFoundException.class );
@@ -250,8 +250,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -288,8 +288,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithoutQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithoutQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -326,8 +326,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -364,8 +364,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithoutQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithoutQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -402,8 +402,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -440,8 +440,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithoutQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithoutQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -478,8 +478,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -516,8 +516,8 @@ class BeerServiceImplTest
         {
             // given
             final PageRequest pageRequest = PageRequest.of( 1, 1 );
-            final Beer beer = getTestBeerWithId();
-            final BeerDto beerDto = getTestBeerDtoWithoutQuantity( beer );
+            final Beer beer = TestBeer.getBeerWithId();
+            final BeerDto beerDto = TestBeerDto.getBeerDtoWithoutQuantity( beer );
 
             Page<Beer> beerPage = getTestBeerPage( beer, pageRequest );
             final BeerPagedList expected = getTestBeerPagedList( beerDto, pageRequest );
@@ -551,56 +551,6 @@ class BeerServiceImplTest
     }
 
     //==================================================================================================================
-
-    private Beer getTestBeerWithId()
-    {
-        Beer testBeer = TestBeer.getBeer();
-        testBeer.setId( UUID.randomUUID() );
-        return testBeer;
-    }
-
-    private BeerDto getTestBeerDtoWithQuantity()
-    {
-        BeerDto testBeerDto = TestBeerDto.getBeerDto();
-        testBeerDto.setQuantityOnHand( 100 );
-        return testBeerDto;
-    }
-
-    private BeerDto getTestBeerDtoWithQuantity(Beer beer)
-    {
-        BeerDto beerDto = getTestBeerDtoFromBeer( beer );
-        beerDto.setQuantityOnHand( 100 );
-        return beerDto;
-    }
-
-    private BeerDto getTestBeerDtoWithoutQuantity()
-    {
-        BeerDto testBeerDto = TestBeerDto.getBeerDto();
-        testBeerDto.setQuantityOnHand( null );
-        return testBeerDto;
-    }
-
-    private BeerDto getTestBeerDtoWithoutQuantity(Beer beer)
-    {
-        BeerDto beerDto = getTestBeerDtoFromBeer( beer );
-        beerDto.setQuantityOnHand( null );
-        return beerDto;
-    }
-
-    private BeerDto getTestBeerDtoFromBeer(Beer beer)
-    {
-        BeerDto testBeerDto = TestBeerDto.getBeerDto();
-
-        testBeerDto.setId( beer.getId() );
-        testBeerDto.setName( beer.getName() );
-        testBeerDto.setStyle(BeerStyle.valueOf( beer.getStyle() ));
-        testBeerDto.setUpc( beer.getUpc() );
-        testBeerDto.setPrice( beer.getPrice() );
-
-        return testBeerDto;
-    }
-
-
     private BeerPagedList getTestBeerPagedList(BeerDto beerDto, PageRequest pageRequest)
     {
         List<BeerDto> content = List.of( beerDto );

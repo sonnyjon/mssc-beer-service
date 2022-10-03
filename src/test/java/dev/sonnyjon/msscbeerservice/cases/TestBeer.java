@@ -4,6 +4,7 @@ import dev.sonnyjon.msscbeerservice.model.beer.Beer;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
 /**
  * Created by Sonny on 9/17/2022.
@@ -25,5 +26,12 @@ public class TestBeer
                 .minOnHand( 12 )
                 .quantityToBrew( 200 )
                 .build();
+    }
+
+    public static Beer getBeerWithId()
+    {
+        Beer beer = getBeer();
+        beer.setId( UUID.randomUUID() );
+        return beer;
     }
 }

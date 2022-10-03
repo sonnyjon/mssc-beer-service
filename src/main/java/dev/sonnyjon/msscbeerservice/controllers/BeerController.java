@@ -4,7 +4,6 @@ import dev.sonnyjon.msscbeerservice.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerPagedList;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 import dev.sonnyjon.msscbeerservice.services.BeerService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +16,6 @@ import java.util.UUID;
 /**
  * Created by Sonny on 8/21/2022.
  */
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/")
 @Slf4j
@@ -27,6 +25,11 @@ public class BeerController
     private static final Integer DEFAULT_PAGE_SIZE = 25;
 
     private final BeerService beerService;
+
+    public BeerController(BeerService beerService)
+    {
+        this.beerService = beerService;
+    }
 
     @GetMapping(produces = { "application/json" }, path = "beer")
     public ResponseEntity<BeerPagedList> listBeers(
@@ -50,7 +53,7 @@ public class BeerController
     }
 
     @PostMapping(path = "beer")
-    public ResponseEntity saveNewBeer(@Validated @RequestBody BeerDto beerDto)
+    public ResponseEntity<BeerDto> saveNewBeer(@Validated @RequestBody BeerDto beerDto)
     {
         return new ResponseEntity<>(  beerService.saveNewBeer( beerDto ), HttpStatus.CREATED );
     }
@@ -72,7 +75,7 @@ public class BeerController
     }
 
     @PutMapping("beer/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDto beerDto)
+    public ResponseEntity<BeerDto> updateBeerById(@PathVariable("beerId") UUID beerId, @Validated @RequestBody BeerDto beerDto)
     {
         return new ResponseEntity<>( beerService.updateBeer(beerId, beerDto), HttpStatus.NO_CONTENT );
     }

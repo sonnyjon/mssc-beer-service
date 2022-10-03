@@ -36,6 +36,8 @@ public class BeerServiceImpl implements BeerService
                                    PageRequest pageRequest,
                                    Boolean showInventoryOnHand)
     {
+        showInventoryOnHand = (showInventoryOnHand != null) && showInventoryOnHand;
+
         Page<Beer> beerPage = getBeerPage( beerName, beerStyle, pageRequest );
 
         List<BeerDto> content = (showInventoryOnHand)

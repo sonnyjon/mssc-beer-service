@@ -1,6 +1,7 @@
 package dev.sonnyjon.msscbeerservice.cases;
 
 import dev.sonnyjon.msscbeerservice.dto.BeerDto;
+import dev.sonnyjon.msscbeerservice.model.beer.Beer;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 
 import java.math.BigDecimal;
@@ -34,5 +35,46 @@ public class TestBeerDto
                 .quantityOnHand( quantityOnHand )
                 .price( price )
                 .build();
+    }
+
+    public static BeerDto getBeerDtoFromBeer(Beer beer)
+    {
+        BeerDto beerDto = getBeerDto();
+
+        beerDto.setId( beer.getId() );
+        beerDto.setName( beer.getName() );
+        beerDto.setStyle(BeerStyle.valueOf( beer.getStyle() ));
+        beerDto.setUpc( beer.getUpc() );
+        beerDto.setPrice( beer.getPrice() );
+
+        return beerDto;
+    }
+
+    public static BeerDto getBeerDtoWithQuantity()
+    {
+        BeerDto beerDto = getBeerDto();
+        beerDto.setQuantityOnHand( 100 );
+        return beerDto;
+    }
+
+    public static BeerDto getBeerDtoWithQuantity(Beer beer)
+    {
+        BeerDto beerDto = getBeerDtoFromBeer( beer );
+        beerDto.setQuantityOnHand( 100 );
+        return beerDto;
+    }
+
+    public static BeerDto getBeerDtoWithoutQuantity()
+    {
+        BeerDto testBeerDto = getBeerDto();
+        testBeerDto.setQuantityOnHand( null );
+        return testBeerDto;
+    }
+
+    public static BeerDto getBeerDtoWithoutQuantity(Beer beer)
+    {
+        BeerDto beerDto = getBeerDtoFromBeer( beer );
+        beerDto.setQuantityOnHand( null );
+        return beerDto;
     }
 }
