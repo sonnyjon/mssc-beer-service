@@ -1,5 +1,6 @@
 package dev.sonnyjon.msscbeerservice.services.order;
 
+import dev.sonnyjon.msscbeerservice.exceptions.NotFoundException;
 import dev.sonnyjon.msscbeerservice.dto.BeerOrderDto;
 import dev.sonnyjon.msscbeerservice.repositories.BeerRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,8 @@ public class BeerOrderValidator
 
     public Boolean validateOrder(BeerOrderDto beerOrder)
     {
+        if (beerOrder == null) throw new NotFoundException( "BeerOrder is NULL" );
+
         AtomicInteger beersNotFound = new AtomicInteger();
 
         beerOrder.getBeerOrderLines().forEach( orderline -> {

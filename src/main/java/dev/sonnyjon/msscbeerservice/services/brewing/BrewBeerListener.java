@@ -1,7 +1,7 @@
 package dev.sonnyjon.msscbeerservice.services.brewing;
 
 import dev.sonnyjon.msscbeerservice.config.JmsConfig;
-import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
+import dev.sonnyjon.msscbeerservice.exceptions.NotFoundException;
 import dev.sonnyjon.msscbeerservice.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.model.beer.Beer;
 import dev.sonnyjon.msscbeerservice.model.events.BrewBeerEvent;

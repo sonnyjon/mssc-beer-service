@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sonnyjon.msscbeerservice.cases.TestBeerDto;
 import dev.sonnyjon.msscbeerservice.cases.TestConstants;
 import dev.sonnyjon.msscbeerservice.controllers.BeerController;
-import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
+import dev.sonnyjon.msscbeerservice.exceptions.NotFoundException;
 import dev.sonnyjon.msscbeerservice.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerPagedList;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;

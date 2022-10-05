@@ -1,4 +1,4 @@
-package dev.sonnyjon.msscbeerservice.controllers;
+package dev.sonnyjon.msscbeerservice.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

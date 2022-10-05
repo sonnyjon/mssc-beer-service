@@ -3,7 +3,7 @@ package dev.sonnyjon.msscbeerservice.services;
 import dev.sonnyjon.msscbeerservice.cases.TestBeer;
 import dev.sonnyjon.msscbeerservice.cases.TestBeerDto;
 import dev.sonnyjon.msscbeerservice.cases.TestConstants;
-import dev.sonnyjon.msscbeerservice.controllers.NotFoundException;
+import dev.sonnyjon.msscbeerservice.exceptions.NotFoundException;
 import dev.sonnyjon.msscbeerservice.dto.BeerDto;
 import dev.sonnyjon.msscbeerservice.mapper.BeerMapper;
 import dev.sonnyjon.msscbeerservice.model.beer.Beer;
