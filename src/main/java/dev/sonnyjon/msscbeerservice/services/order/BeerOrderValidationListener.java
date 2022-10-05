@@ -21,6 +21,8 @@ public class BeerOrderValidationListener
     @JmsListener(destination = JmsConfig.VALIDATE_ORDER_QUEUE)
     public void listen(ValidateOrderRequest validateOrderRequest)
     {
+        if (validateOrderRequest == null) return;
+
         Boolean isValid = validator.validateOrder( validateOrderRequest.getBeerOrder() );
 
         jmsTemplate.convertAndSend(
