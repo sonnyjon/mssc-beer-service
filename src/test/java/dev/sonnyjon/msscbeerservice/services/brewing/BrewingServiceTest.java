@@ -54,7 +54,7 @@ class BrewingServiceTest
 
         // when
         when(beerRepository.findAll()).thenReturn( beers );
-        when(beerInventoryService.getOnhandInventory(any( UUID.class ))).thenReturn( inStock );
+        when(beerInventoryService.getOnHandInventory(any( UUID.class ))).thenReturn( inStock );
         doNothing().when(jmsTemplate).convertAndSend( anyString(), any(BrewBeerEvent.class) );
 
         brewingService.checkForLowInventory();
@@ -62,7 +62,7 @@ class BrewingServiceTest
         // then
         assertTrue( inStock <= beer.getMinOnHand() );
         verify(beerRepository, times(1)).findAll();
-        verify(beerInventoryService, times(1)).getOnhandInventory(any( UUID.class ));
+        verify(beerInventoryService, times(1)).getOnHandInventory(any( UUID.class ));
         verify(jmsTemplate, times(1)).convertAndSend( anyString(), any(BrewBeerEvent.class) );
     }
 }

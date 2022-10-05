@@ -38,7 +38,7 @@ public class BeerInventoryServiceRestTemplateImpl implements BeerInventoryServic
     }
 
     @Override
-    public Integer getOnhandInventory(UUID beerId)
+    public Integer getOnHandInventory(UUID beerId)
     {
         log.debug("Calling Inventory Service");
 

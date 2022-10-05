@@ -18,7 +18,7 @@ public class InventoryServiceFeignClientFailover implements InventoryServiceFeig
     private final InventoryFailoverFeignClient failoverFeignClient;
 
     @Override
-    public ResponseEntity<List<BeerInventoryDto>> getOnhandInventory(UUID beerId)
+    public ResponseEntity<List<BeerInventoryDto>> getOnHandInventory(UUID beerId)
     {
         return failoverFeignClient.getOnhandInventory();
     }

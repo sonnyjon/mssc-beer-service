@@ -7,5 +7,5 @@ import java.util.UUID;
  */
 public interface BeerInventoryService
 {
-    Integer getOnhandInventory(UUID beerId);
+    Integer getOnHandInventory(UUID beerId);
 }

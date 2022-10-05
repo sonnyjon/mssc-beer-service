@@ -23,11 +23,11 @@ public class BeerInventoryServiceFeign implements BeerInventoryService
     private final InventoryServiceFeignClient inventoryServiceFeignClient;
 
     @Override
-    public Integer getOnhandInventory(UUID beerId)
+    public Integer getOnHandInventory(UUID beerId)
     {
         log.debug("Calling Inventory Service - BeerId: " + beerId);
 
-        ResponseEntity<List<BeerInventoryDto>> responseEntity = inventoryServiceFeignClient.getOnhandInventory( beerId );
+        ResponseEntity<List<BeerInventoryDto>> responseEntity = inventoryServiceFeignClient.getOnHandInventory( beerId );
 
         Integer onHand = Objects.requireNonNull(responseEntity.getBody())
                                 .stream()
