@@ -187,4 +187,12 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>netbeans</id>
+            <name>NetBeans</name>
+            <url>https://netbeans.apidesign.org/maven2/</url>
+        </repository>
+    </repositories>
+
 </project>
