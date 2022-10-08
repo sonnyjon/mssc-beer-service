@@ -1,3 +1,4 @@
-[//]: # ([![CircleCI]&#40;https://circleci.com/gh/springframeworkguru/mssc-beer-service.svg?style=svg&#41;]&#40;https://circleci.com/gh/springframeworkguru/mssc-beer-service&#41;)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sonnyjon/mssc-beer-service/tree/my-refactor.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sonnyjon/mssc-beer-service/tree/my-refactor)
+
 # MSSC Beer Service
 
