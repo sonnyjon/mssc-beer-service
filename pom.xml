@@ -4,11 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>dev.sonnyjon</groupId>
-        <artifactId>mssc-brewery-bom</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>com.github.sfg-beer-works</groupId>
+        <artifactId>sfg-brewery-bom</artifactId>
+        <version>1.0.23</version>
     </parent>
 
+    <groupId>dev.sonnyjon</groupId>
     <artifactId>mssc-beer-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -16,22 +17,32 @@
     <description>MSCC Beer Service</description>
 
     <properties>
-        <spring-cloud.version>2021.0.3</spring-cloud.version>
+        <!-- OVERRIDDEN -->
+        <spring.boot.version>2.7.4</spring.boot.version>
+        <java.version>17</java.version>
+        <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+        <jaxb.version>2.3.1</jaxb.version>
+        <jaxb.core.version>4.0.0</jaxb.core.version>
+        <lombok.mapstruct.bindVersion>0.2.0</lombok.mapstruct.bindVersion>
+        <lombok.version>1.18.24</lombok.version>
+        <!-- NEW -->
+        <spring.cloud.version>2021.0.3</spring.cloud.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
                 <groupId>org.glassfish.jaxb</groupId>
                 <artifactId>jaxb-runtime</artifactId>
                 <version>2.3.6</version>
+            </dependency>
+            <!-- Override parent's Spring Boot version -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -54,7 +65,7 @@
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
             <artifactId>jaxb-core</artifactId>
-            <version>4.0.0</version>
+            <version>${jaxb.core.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sun.xml.bind</groupId>
@@ -62,6 +73,10 @@
             <version>${jaxb.version}</version>
         </dependency>
         <!-- Feign Stuff -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -80,7 +95,103 @@
             <artifactId>ehcache</artifactId>
             <version>3.9.9</version>
         </dependency>
+        <!-- Overridden -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>${lombok.mapstruct.bindVersion}</version>
+        </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.10.1</version>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${lombok.mapstruct.bindVersion}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                    <compilerArgs>
+                        <compilerArg>
+                            -Amapstruct.defaultComponentModel=spring
+                        </compilerArg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>[3.8.1,)</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>17</version>
+                                </requireJavaVersion>
+                                <requireReleaseDeps>
+                                    <onlyWhenRelease>true</onlyWhenRelease>
+                                    <message>Release builds must not have snapshot dependencies</message>
+                                </requireReleaseDeps>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
