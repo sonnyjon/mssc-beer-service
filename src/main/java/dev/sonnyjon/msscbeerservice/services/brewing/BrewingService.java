@@ -30,12 +30,12 @@ public class BrewingService
     @Scheduled(fixedRate = 5000) //every 5 seconds
     public void checkForLowInventory()
     {
-        List<Beer> beers = (List<Beer>) beerRepository.findAll();
+        List<Beer> beers = beerRepository.findAll();
 
         beers.forEach( beer -> {
             Integer invQOH = beerInventoryService.getOnHandInventory(beer.getId());
             log.debug("Checking Inventory for: " + beer.getName() + " / " + beer.getId());
-            log.debug("Min Onhand is: " + beer.getMinOnHand());
+            log.debug("Min on hand is: " + beer.getMinOnHand());
             log.debug("Inventory is: "  + invQOH);
 
             if (beer.getMinOnHand() >= invQOH)

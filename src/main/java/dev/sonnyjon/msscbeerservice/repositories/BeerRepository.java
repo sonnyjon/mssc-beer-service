@@ -4,14 +4,14 @@ import dev.sonnyjon.msscbeerservice.model.beer.Beer;
 import dev.sonnyjon.msscbeerservice.model.beer.BeerStyle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
 /**
  * Created by Sonny on 8/22/2022.
  */
-public interface BeerRepository extends PagingAndSortingRepository<Beer, UUID>
+public interface BeerRepository extends JpaRepository<Beer, UUID>
 {
     Page<Beer> findAllByName(String beerName, PageRequest pageRequest);
 
